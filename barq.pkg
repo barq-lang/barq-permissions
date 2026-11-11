@@ -1,0 +1,10 @@
+// Read by barq install (barq 0.21+): barq install barq-lang/barq-permissions
+name        = "barq-permissions"
+version     = "0.21.0-alpha"
+description = "Roles and permissions for Barq users"
+author      = "barq-lang"
+license     = "MIT"
+requires    = #{
+    "barq": ">=0.20.0-alpha",
+    "barq-lang/barq-auth": "^0.21.0-alpha"
+}

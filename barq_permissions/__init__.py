@@ -6,7 +6,7 @@ Needs barq-auth (and so barq-framework).
 """
 
 NAME = "barq-permissions"
-__version__ = "0.18.0-alpha"
+__version__ = "0.21.0-alpha"
 REQUIRES = ["barq_auth"]
 
 USAGE = """

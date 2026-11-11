@@ -14,6 +14,8 @@ git clone https://github.com/barq-lang/barq-permissions
 barq/bin/barq packages        # lists barq-permissions
 ```
 
+With barq 0.21 or later you can instead run `barq install barq-lang/barq-permissions` in a project: it goes into the project's `vendor/` and loads from there.
+
 The `barq` command loads packages cloned next to the `barq` checkout (or listed in `BARQ_PATH`); see [Repositories and packages](https://github.com/barq-lang/barq#repositories-and-packages).
 
 ## Tests
