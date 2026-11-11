@@ -1,0 +1,89 @@
+== no tables
+false false
+PermissionException: Role.create(): roles and permissions need the tables roles, permissions, role_has_permissions, model_has_roles, model_has_permissions
+#{"roles": false, "permissions": false, "role_has_permissions": false, "model_has_roles": false, "model_has_permissions": false}
+== create
+posts.* web 7 true true
+admin web 3 3 3 7
+api #["admin", "editor", "writer"] #["admin"]
+PermissionException: a role named "admin" already exists for guard "web"
+PermissionException: Role.findByName(): there is no role named "nobody" for guard "web" — create it first: Role.create("nobody")
+true true editor
+#["admin", "editor", "writer"]
+web true
+== role permissions
+#["create posts", "delete posts", "edit posts", "publish posts", "view posts", "view users"]
+#["create posts", "edit posts", "publish posts", "view posts"] true false
+#["view posts"] #["view posts"]
+#["admin", "editor"] 3
+true
+false
+PermissionException: Role.givePermissionTo(): there is no permission named "view posts" for guard "api" (there is one for guard "web")
+== user roles
+true false true false
+true true false
+#["editor", "writer"] #["editor", "writer"] 2
+false true true false
+#["editor"]
+#["admin", "writer"]
+#["editor"]
+#[] false
+1 #["Ali"] 1
+PermissionException: User.assignRole(): there is no role named "ghost" for guard "web" — create it first: Role.create("ghost")
+PermissionException: User.assignRole(): save the User first
+false
+== user permissions
+true true false
+true false true
+#["delete posts", "view posts"] 1 #["view posts"]
+#["delete posts", "view posts"]
+true false
+0 0 false
+true
+== gate
+true false true true
+true true
+true false true
+false
+== wildcards
+true true false true false
+true true true
+true true false
+false true
+== super admin
+false #[]
+true true true super-admin
+== teams
+true false false
+#["editor", "writer"] #["writer"] 1 0
+true false false
+true (writer has no team, so it counts everywhere)
+true false true
+#["manage settings", "publish posts", "view posts"]
+false
+true
+false (deleting a team removes its assignments)
+== delete
+6 10
+5 #[] #["admin", "editor"]
+5 false
+0
+== cache
+false
+true
+true false
+== middleware
+/admin #["200", "403", "403", "403"] 401
+/content #["200", "200", "403", "403"] 401
+/publish #["200", "200", "200", "200"] 401
+/either #["200", "200", "403", "200"] 401
+/api-admin #["401", "401", "401", "401"] 401
+User does not have the right roles.
+#["admin", "admin"] true 200 403
+== errors
+TypeException: User.hasRole() takes role names, ids or Role objects, got float
+TypeException: Model.assignRole() has no parameter 'guard' (its parameters: roles, team)
+TypeException: Role.givePermissionTo() takes permission names, ids or Permission objects, got bool
+PermissionException: User.assignRole(): the role "auditor" belongs to guard "admin", which User does not use (its guards: web, api)
+== HasRoles
+#["editor"] true #["Kim"] 1

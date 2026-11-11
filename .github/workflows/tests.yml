@@ -1,0 +1,33 @@
+name: tests
+on: [push, pull_request]
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python: ["3.14"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      # The package and the repos it needs are cloned side by side, the way barq finds them.
+      - uses: actions/checkout@v4
+        with:
+          path: barq-permissions
+      - uses: actions/checkout@v4
+        with:
+          repository: barq-lang/barq
+          path: barq
+      - uses: actions/checkout@v4
+        with:
+          repository: barq-lang/barq-framework
+          path: barq-framework
+      - uses: actions/checkout@v4
+        with:
+          repository: barq-lang/barq-auth
+          path: barq-auth
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Tests
+        working-directory: barq-permissions
+        run: python tests/test_permissions.py
